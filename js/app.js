@@ -24,11 +24,24 @@ function eleccionJugador(opcion) {
   botonIniciarJuego.innerHTML = 'Probar con otro número';
   let input = document.getElementById('inputNumero');
 
+  //Bandera para validar el input que sea un numero entre 0 y 100
+  let bandera = true;
+
   //Obtengo el input del número que elgió el Jugador
   nroJugador = parseInt(input.value);
 
+  switch (true) {
+    case nroJugador < 0 || nroJugador > 100:
+      alert('Por favor, ingrese números del 0 al 100');
+      bandera = false;
+      input.value = '';
+      break;
+  }
+
   //comparar el numero elegido por el Jugador con el número Mágico
-  compararNumeros(nroJugador);
+  if (bandera === true) {
+    compararNumeros(nroJugador);
+  }
 }
 
 //Comparar Número magico con el Número de Jugador
@@ -65,7 +78,7 @@ function mostrarDivEleccionJugador() {
 
     //cambiar el subtitulo
     const subtitulo = document.getElementById('subtitulo');
-    subtitulo.innerHTML = 'Elige uno de los tres movimientos';
+    subtitulo.innerHTML = 'Elige un número del 0 al 100:';
   }
 }
 
