@@ -1,3 +1,14 @@
+let inputNumero = document.getElementById('inputNumero');
+inputNumero.focus();
+
+//Focus en el botón Close Modal
+let myModal = document.getElementById('myModal');
+let botonCloseModal = document.getElementById('botonCloseModal');
+//cuando se abre el modal
+myModal.addEventListener('shown.bs.modal', function () {
+  botonCloseModal.focus();
+});
+
 let movimientoJugador = '';
 let formulario = document.querySelector('form');
 let botonJugardenuevo = document.getElementById('jugarNuevamente');
@@ -21,18 +32,18 @@ function generarNumeroMagico() {
 //Número elegido por el Jugador
 function eleccionJugador(opcion) {
   opcion.preventDefault();
-  botonIniciarJuego.innerHTML = 'Probar con otro número';
+
   let input = document.getElementById('inputNumero');
 
   //Bandera para validar el input que sea un numero entre 0 y 100
   let bandera = true;
 
-  //Obtengo el input del número que elgió el Jugador
+  //Obtengo el input del número que eligió el Jugador
   nroJugador = parseInt(input.value);
-
   switch (true) {
-    case nroJugador < 0 || nroJugador > 100:
-      alert('Por favor, ingrese números del 0 al 100');
+    case nroJugador < 0 || nroJugador > 100 || input.value === '':
+      let modalBody = document.getElementById('modal-body');
+      modalBody.innerHTML = 'Por favor, ingrese números del 0 al 100';
       bandera = false;
       input.value = '';
       break;
@@ -41,7 +52,10 @@ function eleccionJugador(opcion) {
   //comparar el numero elegido por el Jugador con el número Mágico
   if (bandera === true) {
     compararNumeros(nroJugador);
+    return;
   }
+  //Probar con otro numero
+  botonIniciarJuego.innerHTML = 'Probar con otro número';
 }
 
 //Comparar Número magico con el Número de Jugador
@@ -50,17 +64,24 @@ function compararNumeros(numeroJugador) {
   let input = document.getElementById('inputNumero');
   input.value = '';
   if (numeroJugador < numeroMagico) {
-    alert('El Número que ingresaste es MENOR al Número Magico');
+    let modalBody = document.getElementById('modal-body');
+    modalBody.innerHTML = 'El Número que ingresaste es MENOR al Número Magico';
   } else if (numeroJugador > numeroMagico) {
-    alert('El Número que ingresaste es MAYOR al Número Magico');
+    let modalBody = document.getElementById('modal-body');
+    modalBody.innerHTML = 'El Número que ingresaste es MAYOR al Número Magico';
   } else if (numeroJugador === numeroMagico) {
-    alert(`FELICIDADES LE ACERTASTE AL NUMERO MAGICO EN ${contador} INTENTOS`);
+    let modalBody = document.getElementById('modal-body');
+    modalBody.innerHTML = `FELICIDADES LE ACERTASTE AL NUMERO MAGICO EN ${contador} INTENTOS`;
+    //se cambia la card por el número elegido
     cambiarCardJugadorNumeroElegido(numeroJugador);
+    //se cambia la card por el número mágico
     mostraImagenONumeroMagico();
     botonJugardenuevo.classList.remove('disabled');
     const subtitulo = document.getElementById('subtitulo');
     subtitulo.innerHTML = 'FIN DEL JUEGO!!!';
+    //generar nuevo número aleatorio
     numeroMagico = generarNumeroMagico();
+    //inicializar contador
     contador = 0;
   }
 }
