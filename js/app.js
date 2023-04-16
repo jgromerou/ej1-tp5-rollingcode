@@ -1,14 +1,6 @@
 let inputNumero = document.getElementById('inputNumero');
 inputNumero.focus();
 
-//Focus en el botón Close Modal
-let myModal = document.getElementById('myModal');
-let botonCloseModal = document.getElementById('botonCloseModal');
-//cuando se abre el modal
-myModal.addEventListener('shown.bs.modal', function () {
-  botonCloseModal.focus();
-});
-
 let movimientoJugador = '';
 let formulario = document.querySelector('form');
 let botonJugardenuevo = document.getElementById('jugarNuevamente');
@@ -40,7 +32,7 @@ function eleccionJugador(opcion) {
 
   //Obtengo el input del número que eligió el Jugador
   nroJugador = parseInt(input.value);
-  switch (true) {
+  switch (bandera) {
     case nroJugador < 0 || nroJugador > 100 || input.value === '':
       let modalBody = document.getElementById('modal-body');
       modalBody.innerHTML = 'Por favor, ingrese números del 0 al 100';
@@ -140,3 +132,18 @@ function mostraImagenONumeroMagico() {
     parrafoNumeroMagico.innerText = numeroMagico;
   }
 }
+
+//Focus en el botón Close Modal
+let myModal = document.getElementById('myModal');
+let botonCloseModal = document.getElementById('botonCloseModal');
+//cuando se abre el modal
+myModal.addEventListener('shown.bs.modal', function () {
+  botonCloseModal.focus();
+});
+
+//Focus en el input al cerrar el modal
+document.getElementById('myModal').addEventListener('hidden.bs.modal', () => {
+  setTimeout(() => {
+    inputNumero.focus();
+  }, 2);
+});
