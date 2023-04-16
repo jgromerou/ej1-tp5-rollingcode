@@ -40,7 +40,7 @@ function eleccionJugador(opcion) {
 
   //Obtengo el input del número que eligió el Jugador
   nroJugador = parseInt(input.value);
-  switch (true) {
+  switch (bandera) {
     case nroJugador < 0 || nroJugador > 100 || input.value === '':
       let modalBody = document.getElementById('modal-body');
       modalBody.innerHTML = 'Por favor, ingrese números del 0 al 100';
